@@ -1,0 +1,35 @@
+version: "3"
+services:
+
+    user.service:
+        build: user-service/
+        container-name: user-service
+        restart: always
+
+    dept.service:
+        build: dept-service/
+        container-name: dept-service
+        restart: always
+
+    project.service:
+        build: project-service/
+        container-name: project-service
+        restart: always
+
+    squad.service:
+        build: squad-service/
+        container-name: squad-service
+        restart: always
+        
+    role.service:
+        build: role-service/
+        container-name: role-service
+        restart: always
+        
+networks:
+    user_network:
+    dept_network:
+    project_network:
+    squad_network:
+    role_network:
+    

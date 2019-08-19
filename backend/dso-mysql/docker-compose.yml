@@ -1,0 +1,71 @@
+version: "3"
+services:
+
+    user.db:
+        build: user/
+        build: mysql_user
+        restart: always
+        volumes: 
+            - mysql_data:/var/lib/mysql
+            - ./user/:./docker-entrypoint-initdb.d
+        environment:
+            MYSQL_ROOT_PASSWORD: dsouserdb
+            MYSQL_DATABASE: dso
+            MYSQL_USER: dso-user
+            MYSQL_PASSWORD: dso-pass
+           
+    dept.db:
+        build: dept/
+        container_name: mysql_dept
+        restart: always
+        volumes: 
+            - mysql_data:/var/lib/mysql
+            - ./user/:./docker-entrypoint-initdb.d
+        environment:
+            MYSQL_ROOT_PASSWORD: dsodeptdb
+            MYSQL_DATABASE: dso
+            MYSQL_USER: dso-dept
+            MYSQL_PASSWORD: dso-pass        
+            
+     project.db:
+        build: project/
+        container_name: mysql_project
+        restart: always
+        volumes: 
+            - mysql_data:/var/lib/mysql
+            - ./user/:./docker-entrypoint-initdb.d
+        environment:
+            MYSQL_ROOT_PASSWORD: dsoprojectdb
+            MYSQL_DATABASE: dso
+            MYSQL_USER: dso-project
+            MYSQL_PASSWORD: dso-pass           
+        
+      squad.db:
+        build: squad/
+        container_name: mysql_squad
+        restart: always
+        volumes: 
+            - mysql_data:/var/lib/mysql
+            - ./user/:./docker-entrypoint-initdb.d
+        environment:
+            MYSQL_ROOT_PASSWORD: dsosquaddb
+            MYSQL_DATABASE: dso
+            MYSQL_USER: dso-squad
+            MYSQL_PASSWORD: dso-pass
+
+      role.db:
+        build: role/
+        container_name: mysql_role
+        restart: always
+        volumes: 
+            - mysql_data:/var/lib/mysql
+            - ./user/:./docker-entrypoint-initdb.d
+        environment:
+            MYSQL_ROOT_PASSWORD: dsoroledb
+            MYSQL_DATABASE: dso
+            MYSQL_USER: dso-role
+            MYSQL_PASSWORD: dso-pass
+            
+volumes:
+    mysql-date:
+        name: backend-mysql-data
