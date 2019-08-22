@@ -1,0 +1,10 @@
+version: '2.1'
+
+services:
+  delexdummyapp-ui:
+    image: delexdummyapp-ui
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 4200:4200
