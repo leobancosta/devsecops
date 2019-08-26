@@ -3,12 +3,12 @@ services:
 
     emp.db:
         image: mysql:5.7
-        container_name: mysql_user
+        container_name: mysql_emp
         ports:
-            - "3307:3306"
+            - "3306:3306"
         restart: always
-        volumes: 
-            - ./mysql_data/emp/:/var/lib/mysql
+        volumes:
+            - ./mysql_data/emp:/var/lib/mysql
             - ./dso-mysql/emp/init.sql:/docker-entrypoint-initdb.d/init.sql
         environment:
             MYSQL_ROOT_PASSWORD: dsoempdb
@@ -20,7 +20,7 @@ services:
             timeout: 20s
             retries: 5
         networks:
-            user_network:
+            emp_network:
                 ipv4_address: 172.10.10.10
 
     dept.db:
@@ -45,50 +45,6 @@ services:
             dept_network:
                 ipv4_address: 172.11.11.10
 
-    project.db:
-        image: mysql:5.7
-        container_name: mysql_project
-        restart: always
-        ports:
-            - "3308:3306"
-        volumes:
-            - ./mysql_data/project:/var/lib/mysql
-            - ./dso-mysql/project/init.sql:/docker-entrypoint-initdb.d/init.sql
-        environment:
-            MYSQL_ROOT_PASSWORD: dsoprojectdb
-            MYSQL_DATABASE: dso
-            MYSQL_USER: dsoproject
-            MYSQL_PASSWORD: dsopass
-        healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-            timeout: 20s
-            retries: 5
-        networks:
-            project_network: 
-                ipv4_address: 172.12.12.10
-
-    squad.db:
-        image: mysql:5.7
-        container_name: mysql_squad
-        restart: always
-        ports:
-            - "3309:3306"
-        volumes:
-            - ./mysql_data/squad/:/var/lib/mysql
-            - ./dso-mysql/squad/init.sql:/docker-entrypoint-initdb.d/init.sql
-        environment:
-            MYSQL_ROOT_PASSWORD: dsosquaddb
-            MYSQL_DATABASE: dso
-            MYSQL_USER: dsosquad
-            MYSQL_PASSWORD: dsopass
-        healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-            timeout: 20s
-            retries: 5
-        networks:
-            squad_network:
-                ipv4_address: 172.13.13.10
-
     role.db:
         image: mysql:5.7
         container_name: mysql_role
@@ -96,7 +52,7 @@ services:
         ports:
             - "3310:3306"
         volumes:
-            - ./mysql_data/role/:/var/lib/mysql
+            - ./mysql_data/role:/var/lib/mysql
             - ./dso-mysql/role/init.sql:/docker-entrypoint-initdb.d/init.sql
         environment:
             MYSQL_ROOT_PASSWORD: dsoroledb
@@ -108,120 +64,8 @@ services:
             timeout: 20s
             retries: 5
         networks:
-            role_network: 
+            role_network:
                 ipv4_address: 172.14.14.10
-
-    client.db:
-        image: mysql:5.7
-        container_name: mysql_client
-        restart: always
-        ports:
-            - "3311:3306"
-        volumes:
-            - ./mysql_data/client/:/var/lib/mysql
-            - ./dso-mysql/client/init.sql:/docker-entrypoint-initdb./init.sql
-        environment:
-            MYSQL_ROOT_PASSWORD: dsoclientdb
-            MYSQL_DATABASE: dso
-            MYSQL_USER: dsoclient
-            MYSQL_PASSWORD: dsopass
-        healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-            timeout: 20s
-            retries: 5
-        networks:
-            client_network: 
-                ipv4_address: 172.15.15.10
-
-    tribe.db:
-        image: mysql:5.7
-        container_name: mysql_tribe
-        restart: always
-        ports:
-            - "3311:3306"
-        volumes:
-            - ./mysql_data/tribe/:/var/lib/mysql
-            - ./dso-mysql/tribe/init.sql:/docker-entrypoint-initdb./init.sql
-        environment:
-            MYSQL_ROOT_PASSWORD: dsoclientdb
-            MYSQL_DATABASE: dso
-            MYSQL_USER: dsoclient
-            MYSQL_PASSWORD: dsopass
-        healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-            timeout: 20s
-            retries: 5
-        networks:
-            client_network: 
-                ipv4_address: 172.15.15.10
-
-    action.db:
-        image: mysql:5.7
-        container_name: mysql_action
-        restart: always
-        ports:
-            - "3311:3306"
-        volumes:
-            - ./mysql_data/action/:/var/lib/mysql
-            - ./dso-mysql/action/init.sql:/docker-entrypoint-initdb./init.sql
-        environment:
-            MYSQL_ROOT_PASSWORD: dsoactiondb
-            MYSQL_DATABASE: dso
-            MYSQL_USER: dsoaction
-            MYSQL_PASSWORD: dsopass
-        healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-            timeout: 20s
-            retries: 5
-        networks:
-            client_network: 
-                ipv4_address: 172.15.15.10
- 
-    role.action.db:
-        image: mysql:5.7
-        container_name: mysql_role_action
-        restart: always
-        ports:
-            - "3311:3306"
-        volumes:
-            - ./mysql_data/role_action/:/var/lib/mysql
-            - ./dso-mysql/role_action/init.sql:/docker-entrypoint-initdb./init.sql
-        environment:
-            MYSQL_ROOT_PASSWORD: dsoroleactiondb
-            MYSQL_DATABASE: dso
-            MYSQL_USER: dsoroleaction
-            MYSQL_PASSWORD: dsopass
-        healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-            timeout: 20s
-            retries: 5
-        networks:
-            client_network: 
-                ipv4_address: 172.15.15.10
-
-    action.service:
-        build:
-            context: .
-            dockerfile: ./dso-microservices/ActionService/Dockerfile
-        container_name: action-service
-        depends_on:
-            - action.db
-        restart: always
-        networks:
-            user_network:
-                ipv4_address: 172.16.16.11
-
-    role.action.service:
-        build:
-            context: .
-            dockerfile: ./dso-microservices/RoleActionService/Dockerfile
-        container_name: role-action-service
-        depends_on:
-            - role-action.db
-        restart: always
-        networks:
-            user_network:
-                ipv4_address: 172.17.17.11
 
     emp.service:
         build:
@@ -232,7 +76,7 @@ services:
             - emp.db
         restart: always
         networks:
-            user_network:
+            emp_network:
                 ipv4_address: 172.10.10.11
 
     dept.service:
@@ -248,30 +92,6 @@ services:
             dept_network:
                 ipv4_address: 172.11.11.11
 
-    project.service:
-        build:
-            context: .
-            dockerfile: ./dso-microservices/ProjectService/Dockerfile
-        container_name: project-service
-        depends_on:
-            - project.db
-        restart: always
-        networks:
-            project_network: 
-                ipv4_address: 172.12.12.11
-
-    squad.service:
-        build:
-            context: .
-            dockerfile: ./dso-microservices/SquadService/Dockerfile
-        container_name: squad-service
-        depends_on:
-            - squad.db
-        restart: always
-        networks:
-            squad_network:
-                ipv4_address: 172.13.13.11
-        
     role.service:
         build:
             context: .
@@ -281,23 +101,11 @@ services:
             - role.db
         restart: always
         networks:
-            role_network: 
+            role_network:
                 ipv4_address: 172.14.14.11
 
-    client.service:
-        build:
-            context: .
-            dockerfile: ./dso-microservices/ClientService/Dockerfile
-        container_name: client-service
-        depends_on:
-            - client.db
-        restart: always
-        networks:
-            client_network: 
-                ipv4_address: 172.15.15.11
-
 networks:
-    user_network:
+    emp_network:
         driver: bridge
         driver_opts:
             com.docker.network.enable.ipv6: "false"
@@ -315,24 +123,6 @@ networks:
             config:
                 - subnet: 172.11.11.0/24
 
-    project_network:
-        driver: bridge
-        driver_opts:
-            com.docker.network.enable.ipv6: "false"
-        ipam:
-            driver: default
-            config:
-                - subnet: 172.12.12.0/24
-
-    squad_network:
-        driver: bridge
-        driver_opts:
-            com.docker.network.enable.ipv6: "false"
-        ipam:
-            driver: default
-            config:
-                - subnet: 172.13.13.0/24
-
     role_network:
         driver: bridge
         driver_opts:
@@ -341,30 +131,3 @@ networks:
             driver: default
             config:
                 - subnet: 172.14.14.0/24
-
-    client_network:
-        driver: bridge
-        driver_opts:
-            com.docker.network.enable.ipv6: "false"
-        ipam:
-            driver: default
-            config:
-                - subnet: 172.15.15.0/24
-
-    action_network:
-        driver: bridge
-        driver_opts:
-            com.docker.network.enable.ipv6: "false"
-        ipam:
-            driver: default
-            config:
-                - subnet: 172.16.16.0/24
-
-    role_action_network:
-        driver: bridge
-        driver_opts:
-            com.docker.network.enable.ipv6: "false"
-        ipam:
-            driver: default
-            config:
-                - subnet: 172.17.17.0/24
