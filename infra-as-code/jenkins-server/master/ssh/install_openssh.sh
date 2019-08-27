@@ -11,6 +11,8 @@ then
    
    apt-get install openssh-server
    
+   apt-get install ufw
+   
    ufw allow ssh
    
    ufw enable

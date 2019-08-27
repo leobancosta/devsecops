@@ -1,6 +1,0 @@
-authtoken: 7B6HQCbjeFKvNx3znJfkz_4kpVJqbqWMq5yrm4ymgq9
-log: /var/log/ngrok.log
-tunnels:
-  jenkins:
-    addr: 8080
-    proto: http

@@ -1,7 +1,36 @@
 version: "3.7"
-
 services:
 
-    openssh:
-        command: ./packages/install_openssh.sh
-        
+    web:
+        command: 
+            - ./packages/install_docker.sh
+            - ./packages/install_docker_compose.sh
+            - ./packages/install_openssl.sh
+            - ./packages/install_openssh.sh
+        environment:
+            - VIRTUAL_HOST=apigateway.server.url
+            - ADMIN_USER=admin
+            - ADMIN_PASSWORD=password
+
+    apigateway:
+        command:
+            - ./packages/install_docker.sh
+            - ./packages/install_docker_compose.sh
+            - ./packages/install_openssl.sh
+            - ./packages/install_openssh.sh
+        environment:
+            - VIRTUAL_HOST=apigateway.server.url
+            - ADMIN_USER=admin
+            - ADMIN_PASSWORD=password
+
+    microservices:
+        command:
+            - ./packages/install_docker.sh
+            - ./packages/install_docker_compose.sh
+            - ./packages/install_openssl.shs
+            - ./packages/install_openssh.sh
+        environment:
+            - VIRTUAL_HOST=apigateway.server.url
+            - ADMIN_USER=admin
+            - ADMIN_PASSWORD=password
+

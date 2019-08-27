@@ -13,5 +13,5 @@ services:
             - "8443:8443"
             - "50000:50000"
         volumes:
-            - ./master/data/:/var/lib/jenkins/
+            - ./master/data:/var/jenkins_home
             - /var/run/docker.sock:/var/run/docker.sock
