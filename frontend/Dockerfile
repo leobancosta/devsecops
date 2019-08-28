@@ -1,8 +1,9 @@
-FROM node:10.13-alpine AS builder
-COPY . ./DelExDummyApp-UI
-WORKDIR /DelExDummyApp-UI
-RUN npm i
-RUN $(npm bin)/ng build --prod
+FROM node:12.9.0-stretch AS builder
+COPY . ./dso-ui
+WORKDIR /dso-ui
+RUN npm install
+RUN npm install @angular/cli
+RUN ng build --prod
 
-FROM nginx:1.15.8-alpine
-COPY --from=builder /DelExDummyApp-UI/dist/DelExDummyApp-UI/ /usr/share/nginx/html
+FROM nginx:1.17.3
+COPY --from=builder /dso-ui/dist/dso-ui /usr/share/nginx/html
