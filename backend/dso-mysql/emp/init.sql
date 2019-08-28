@@ -1,6 +1,6 @@
 CREATE DATABASE dso;
 
-GRANT ALL PRIVILEGES ON dso.* TO 'dsoemp'@'%' IDENTIFIED BY 'dsopass';
+GRANT ALL PRIVILEGES ON dso.* TO 'dsoemp'@'172.10.10.11' IDENTIFIED BY 'dsopass';
 GRANT ALL PRIVILEGES ON dso.* TO 'dsoemp'@'localhost' IDENTIFIED BY 'dsopass';
 
 USE dso;
