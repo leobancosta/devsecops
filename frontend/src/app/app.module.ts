@@ -20,6 +20,7 @@ import { MemberStartComponent } from './modules/member/member-start/member-start
 import { MemberItemComponent } from './modules/member/member-list/member-item/member-item.component';
 import { MemberService } from './core/services/member.service';
 import { LoginService } from './core/services/login.service';
+import { ApiService } from './core/http/api.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,7 @@ import { LoginService } from './core/services/login.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [MemberService, LoginService],
+  providers: [MemberService, LoginService, ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
